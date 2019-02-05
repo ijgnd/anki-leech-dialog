@@ -27,7 +27,7 @@ from anki.hooks import addHook
 from anki.lang import _, ngettext
 from anki.stats import CardStats
 from anki.utils import fmtTimeSpan
-from PyQt4.QtGui import QDialog
+from PyQt5.QtWidgets import QDialog
 
 import leechdialog.leechdialog as ldForm
 
@@ -145,20 +145,24 @@ class LeechDialog(QDialog):
         method in aqt to toggle the buttons back on (the normal version is
         restored as soon as it is called once on the edit-current dialog).
         """
-        dlg = dialogs.open("EditCurrent", mw)
-        oldCloseDlg = dialogs.close
-        def newCloseDlg(name):
-            if name == "EditCurrent":
-                dialogs.close = oldCloseDlg # restore old functionality
-                self._toggleDlgEnabled()
-            oldCloseDlg(name)
-        dialogs.close = newCloseDlg
-        self.setModal(False)
-        self._toggleDlgEnabled()
+        # dlg = dialogs.open("EditCurrent", mw)
+        # oldCloseDlg = dialogs.close
+        # def newCloseDlg(name):
+        #     if name == "EditCurrent":
+        #         dialogs.close = oldCloseDlg # restore old functionality
+        #         self._toggleDlgEnabled()
+        #     oldCloseDlg(name)
+        # dialogs.close = newCloseDlg
+        # self.setModal(False)
+        # self._toggleDlgEnabled()
+        self.accept()
+        self.mw.onEditCurrent()
 
     def onAdd(self):
-        dialogs.open("AddCards", mw)
-        self.setModal(False)
+        # dialogs.open("AddCards", mw)
+        # self.setModal(False)
+        self.accept()        
+        self.mw.onAddCard()
 
     def onChangeDeck(self):
         # based on aqt/browser.py:setDeck(), and add-on writing guide example
